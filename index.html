@@ -1,444 +1,195 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-  <!-- ============================================================
-       BAGIAN HEAD: tidak terlihat di halaman, tapi penting untuk SEO
-       ============================================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ratih | Portofolio</title>
+    <!-- Font Import: Montserrat untuk Judul, Inter untuk Isi -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Biru Modern */
+            --secondary-color: #64748b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+        }
 
-  <!-- Wajib: agar teks tidak rusak di semua browser -->
-  <meta charset="UTF-8">
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
 
-  <!-- Wajib: agar tampilan responsif di HP -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        /* Hero Section */
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #2563eb 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
 
-  <!-- SEO: judul yang muncul di tab browser & hasil pencarian Google -->
-  <title>Ratih — Data Analyst & Web Developer Enthusiast</title>
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
 
-  <!-- SEO: deskripsi singkat yang muncul di bawah judul di Google (max ~155 karakter) -->
-  <meta name="description" content="Halo! Saya Fidyah, seorang data analyst yang antusias dengan AI dan Python. Lihat portofolio dan tulisan saya di sini.">
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
 
-  <!-- SEO: kata kunci (tidak sepenting dulu, tapi tetap berguna) -->
-  <meta name="keywords" content="data analyst, python, AI, portofolio, Sidoarjo">
+        /* Container & Layout */
+        .container {
+            max-width: 900px;
+            margin: -50px auto 50px;
+            padding: 0 20px;
+        }
 
-  <!-- SEO: nama penulis -->
-  <meta name="author" content="Fidyah">
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
 
-  <!-- Tampilan di media sosial saat link di-share (Open Graph) -->
-  <meta property="og:title" content="Fidyah — Data Analyst & AI Enthusiast">
-  <meta property="og:description" content="Portofolio dan tulisan seputar data science, Python, dan AI.">
-  <meta property="og:type" content="website">
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
 
-  <!-- ============================================================
-       CSS: semua gaya visual ada di sini
-       ============================================================ -->
-  <style>
-    /* --- VARIABEL WARNA & FONT --- */
-    /* Ganti nilai di sini untuk mengubah tema seluruh website */
-    :root {
-      --warna-utama: #1a1a2e;       /* biru tua gelap */
-      --warna-aksen: #e94560;       /* merah koral */
-      --warna-teks: #333333;        /* abu gelap untuk teks */
-      --warna-teks-muted: #666666;  /* abu muda untuk teks sekunder */
-      --warna-latar: #fafafa;       /* putih agak hangat */
-      --warna-kartu: #ffffff;       /* putih murni untuk kartu */
-      --font-judul: 'Georgia', serif;
-      --font-teks: 'Segoe UI', system-ui, sans-serif;
-      --bayangan: 0 2px 12px rgba(0,0,0,0.08);
-      --radius: 10px;
-    }
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
 
-    /* --- RESET DASAR --- */
-    /* Menghapus gaya bawaan browser agar konsisten */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        /* Info List */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
 
-    /* --- BODY (seluruh halaman) --- */
-    body {
-      font-family: var(--font-teks);
-      color: var(--warna-teks);
-      background-color: var(--warna-latar);
-      line-height: 1.7;
-      font-size: 16px;
-    }
+        .info-item {
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
 
-    /* --- NAVIGASI (menu atas) --- */
-    nav {
-      background-color: var(--warna-utama);
-      padding: 1rem 2rem;
-      position: sticky; /* tetap di atas saat scroll */
-      top: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .info-item strong {
+            display: block;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
 
-    .nav-logo {
-      color: white;
-      font-family: var(--font-judul);
-      font-size: 1.3rem;
-      text-decoration: none;
-      letter-spacing: 1px;
-    }
+        /* Alur SCOL Style (Modern List) */
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
 
-    .nav-menu {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
+        .step-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
 
-    .nav-menu a {
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
+        .step-list li:last-child { border: none; }
 
-    .nav-menu a:hover {
-      color: var(--warna-aksen);
-    }
+        .day-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 15px;
+            min-width: 80px;
+            text-align: center;
+        }
 
-    /* --- KONTAINER (pembatas lebar konten) --- */
-    /* Agar teks tidak terlalu lebar di layar besar */
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
 
-    /* --- SEKSI HERO (perkenalan utama) --- */
-    .hero {
-      background: linear-gradient(135deg, var(--warna-utama), #16213e);
-      color: white;
-      padding: 5rem 1.5rem;
-      text-align: center;
-    }
-
-    .hero-sapa {
-      font-size: 1rem;
-      color: var(--warna-aksen);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .hero h1 {
-      font-family: var(--font-judul);
-      font-size: clamp(2rem, 5vw, 3.5rem); /* ukuran fleksibel, responsif otomatis */
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.75);
-      max-width: 500px;
-      margin: 0 auto 2rem;
-    }
-
-    /* --- TOMBOL --- */
-    .tombol {
-      display: inline-block;
-      background-color: var(--warna-aksen);
-      color: white;
-      padding: 0.75rem 2rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .tombol:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(233,69,96,0.4);
-    }
-
-    /* --- SEKSI (bagian-bagian halaman) --- */
-    section {
-      padding: 4rem 0;
-    }
-
-    .seksi-judul {
-      font-family: var(--font-judul);
-      font-size: 1.8rem;
-      color: var(--warna-utama);
-      margin-bottom: 0.5rem;
-    }
-
-    .seksi-garis {
-      width: 40px;
-      height: 3px;
-      background-color: var(--warna-aksen);
-      margin-bottom: 2rem;
-    }
-
-    /* --- KARTU (untuk portofolio & keahlian) --- */
-    .grid-kartu {
-      display: grid;
-      /* Otomatis responsif: kolom minimal 200px, maks 1fr */
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .kartu {
-      background: var(--warna-kartu);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      box-shadow: var(--bayangan);
-      border: 1px solid #eeeeee;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .kartu:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    }
-
-    .kartu-ikon {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .kartu h3 {
-      font-size: 1.05rem;
-      color: var(--warna-utama);
-      margin-bottom: 0.5rem;
-    }
-
-    .kartu p {
-      font-size: 0.9rem;
-      color: var(--warna-teks-muted);
-    }
-
-    /* --- SEKSI TENTANG SAYA --- */
-    .tentang-konten {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .foto-placeholder {
-      width: 100%;
-      aspect-ratio: 1;
-      background: linear-gradient(135deg, var(--warna-utama), #e94560);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      max-width: 200px;
-    }
-
-    .tentang-teks h3 {
-      font-size: 1.1rem;
-      color: var(--warna-utama);
-      margin-bottom: 0.75rem;
-    }
-
-    .tentang-teks p {
-      color: var(--warna-teks-muted);
-      margin-bottom: 1rem;
-    }
-
-    /* --- FOOTER --- */
-    footer {
-      background-color: var(--warna-utama);
-      color: rgba(255,255,255,0.7);
-      text-align: center;
-      padding: 2rem 1.5rem;
-      font-size: 0.9rem;
-    }
-
-    footer a {
-      color: var(--warna-aksen);
-      text-decoration: none;
-    }
-
-    /* ============================================================
-       RESPONSIF: penyesuaian untuk layar kecil (HP)
-       Di bawah 600px lebar layar, aturan ini berlaku
-       ============================================================ */
-    @media (max-width: 600px) {
-
-      /* Navigasi: sembunyikan menu teks, tampilkan hanya logo */
-      .nav-menu {
-        display: none; /* nanti bisa dibuat menu hamburger dengan JavaScript */
-      }
-
-      /* Tentang saya: ubah 2 kolom jadi 1 kolom */
-      .tentang-konten {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .foto-placeholder {
-        margin: 0 auto;
-      }
-
-      /* Hero: kurangi padding di HP */
-      .hero {
-        padding: 3rem 1.5rem;
-      }
-    }
-  </style>
+        /* Responsif */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .section-card { padding: 25px; }
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- ============================================================
-       NAVIGASI
-       ============================================================ -->
-  <nav>
-    <a href="#" class="nav-logo">Assalamualaikum</a>
-    <ul class="nav-menu">
-      <li><a href="#tentang">Tentang</a></li>
-      <li><a href="#keahlian">Keahlian</a></li>
-      <li><a href="#portofolio">Portofolio</a></li>
-      <li><a href="#kontak">Kontak</a></li>
-    </ul>
-  </nav>
+    <header>
+        <h1>Ratih</h1>
+        <p>Seorang Guru dan Data Enthuasias | Universitas Terbuka</p>
+    </header>
 
-  <!-- ============================================================
-       HERO — perkenalan utama
-       ============================================================ -->
-  <section class="hero">
-    <p class="hero-sapa">Halo, saya</p>
-    <h1>Fidyah</h1>
-    <p>Data analyst yang antusias dengan Python, AI, dan otomasi alur kerja digital.</p>
-    <a href="#portofolio" class="tombol">Lihat Portofolio</a>
-  </section>
-
-  <!-- ============================================================
-       TENTANG SAYA
-       ============================================================ -->
-  <section id="tentang">
     <div class="container">
-      <h2 class="seksi-judul">Tentang Saya</h2>
-      <div class="seksi-garis"></div>
-
-      <div class="tentang-konten">
-        <!-- Ganti emoji ini dengan tag <img> saat sudah punya foto -->
-        <div class="foto-placeholder">👩‍💻</div>
-
-        <div class="tentang-teks">
-          <h3>Seorang pemelajar yang tak pernah berhenti</h3>
-          <p>
-            Saya telah menempuh path <strong>Data Science</strong> di Dicoding by Dbs Foundation.
-            Fokus saya ada di Python, analisis data, dan bagaimana AI bisa membantu
-            mengoptimalkan alur kerja sehari-hari.
-          </p>
-          <p>
-            Di luar coding, saya tertarik dengan <em>prompt engineering</em>
-            dan manajemen informasi digital.
-            Website ini adalah ruang saya untuk berbagi dan tumbuh.
-          </p>
-          <a href="#kontak" class="tombol">Hubungi Saya</a>
+        <!-- Profil Section -->
+        <div class="section-card">
+            <h2>Profil Akademik</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>NIM</strong>
+                    ---------
+                </div>
+                <div class="info-item">
+                    <strong>Mata Kuliah</strong>
+                    Educational Technology
+                </div>
+                <div class="info-item">
+                    <strong>Program Studi</strong>
+                    S1 Teknologi Pendidikan
+                </div>
+            </div>
         </div>
-      </div>
+
+        <!-- Inovasi SCOL Section -->
+        <div class="section-card">
+            <h2>Model Pembelajaran SCOL</h2>
+            <p>Socio-Collaborative Online Learning (SCOL) dirancang untuk mengatasi isolasi sosial dalam pembelajaran daring.</p>
+            <ul class="step-list">
+                <li><span class="day-badge">Senin</span> Orientasi: Materi & Video Pembuka</li>
+                <li><span class="day-badge">Sel-Rab</span> Eksplorasi: Diskusi Forum & OER</li>
+                <li><span class="day-badge">Kam-Jum</span> Kolaborasi: Proyek Kelompok</li>
+                <li><span class="day-badge">Sabtu</span> Refleksi: Jurnal Refleksi Digital</li>
+                <li><span class="day-badge">Minggu</span> Konsolidasi: Rangkuman Umpan Balik</li>
+            </ul>
+        </div>
+
+        <!-- Tujuan Section -->
+        <div class="section-card">
+            <h2>Tujuan Program</h2>
+            <ul>
+                <li>Mengatasi tekanan psikologis peserta didik dalam lingkungan virtual.</li>
+                <li>Meningkatkan interaksi bermakna antara dosen dan mahasiswa.</li>
+                <li>Mengembangkan keterlibatan aktif sebagai ko-konstruktor pengetahuan.</li>
+            </ul>
+        </div>
     </div>
-  </section>
 
-  <!-- ============================================================
-       KEAHLIAN
-       ============================================================ -->
-  <section id="keahlian" style="background: #f0f4f8;">
-    <div class="container">
-      <h2 class="seksi-judul">Keahlian</h2>
-      <div class="seksi-garis"></div>
-
-      <div class="grid-kartu">
-
-        <div class="kartu">
-          <div class="kartu-ikon">🐍</div>
-          <h3>Python</h3>
-          <p>Pandas, NumPy, visualisasi data dengan Matplotlib & Seaborn.</p>
-        </div>
-
-        <div class="kartu">
-          <div class="kartu-ikon">🤖</div>
-          <h3>AI & Prompt Engineering</h3>
-          <p>Memanfaatkan LLM untuk otomasi dan peningkatan produktivitas.</p>
-        </div>
-
-        <div class="kartu">
-          <div class="kartu-ikon">📊</div>
-          <h3>Analisis Data</h3>
-          <p>Pengolahan data, statistik dasar, dan pembuatan laporan terstruktur.</p>
-        </div>
-
-        <div class="kartu">
-          <div class="kartu-ikon">⚙️</div>
-          <h3>Workflow Optimization</h3>
-          <p>Merancang alur kerja digital yang efisien dan terorganisir.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       PORTOFOLIO
-       ============================================================ -->
-  <section id="portofolio">
-    <div class="container">
-      <h2 class="seksi-judul">Portofolio</h2>
-      <div class="seksi-garis"></div>
-
-      <div class="grid-kartu">
-
-        <div class="kartu">
-          <div class="kartu-ikon">📈</div>
-          <h3>Analisis Data Penjualan</h3>
-          <p>Eksplorasi dataset penjualan menggunakan Pandas dan visualisasi dengan Seaborn.</p>
-        </div>
-
-        <div class="kartu">
-          <div class="kartu-ikon">🧹</div>
-          <h3>Data Cleaning Pipeline</h3>
-          <p>Skrip Python untuk membersihkan dan menstandarisasi data mentah secara otomatis.</p>
-        </div>
-
-        <div class="kartu">
-          <div class="kartu-ikon">📝</div>
-          <h3>Prompt Library</h3>
-          <p>Koleksi prompt engineering yang terstruktur untuk berbagai kebutuhan kerja.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       KONTAK
-       ============================================================ -->
-  <section id="kontak" style="background: #f0f4f8;">
-    <div class="container" style="text-align: center;">
-      <h2 class="seksi-judul">Hubungi Saya</h2>
-      <div class="seksi-garis" style="margin: 0 auto 2rem;"></div>
-      <p style="color: var(--warna-teks-muted); margin-bottom: 2rem;">
-        Ada proyek menarik atau sekadar ingin bertukar pikiran? Saya terbuka untuk berkolaborasi!
-      </p>
-
-      <!-- Ganti href="mailto:..." dengan email Anda -->
-      <a href="mailto:fidyahpuspa@gmail.com" class="tombol">✉️ Kirim Email</a>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       FOOTER
-       ============================================================ -->
-  <footer>
-    <p>© 2025 Fidyahdev · Dibuat dengan semangat dan HTML murni</p>
-    <p style="margin-top: 0.5rem; font-size: 0.8rem;">
-      Hosting gratis di <a href="https://pages.github.com" target="_blank">GitHub Pages</a>
-    </p>
-  </footer>
+    <footer>
+        &copy; 2026 Ratih. Didesain dengan prinsip Human-Centered Education.
+    </footer>
 
 </body>
 </html>
