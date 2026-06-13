@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Puspa Ratih · Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ══ CURSOR ══ */
+*{cursor:none!important}
+#cursor{position:fixed;width:16px;height:16px;background:#ff4d8d;border:2px solid #1a1a2e;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .15s}
+#cursor-ring{position:fixed;width:40px;height:40px;border:3px solid #1a1a2e;border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:left .08s,top .08s}
+body:has(a:hover) #cursor,body:has(button:hover) #cursor{width:24px;height:24px;background:#ffe44d}
+body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:56px;height:56px;border-color:#ff4d8d}
+
+/* ══ PALETTE ══ */
+:root{
+  --bg:      #fffde8;
+  --ink:     #1a1a2e;
+  --pink:    #ff4d8d;
+  --yellow:  #ffe44d;
+  --blue:    #4d9fff;
+  --mint:    #4dffd6;
+  --purple:  #c44dff;
+  --orange:  #ff7a4d;
+  --panel:   #ffffff;
+  --border:  3px solid #1a1a2e;
+  --bw:      4px;
+  --r:       12px;
+  --shadow:  6px 6px 0 #1a1a2e;
+  --shadow-sm: 3px 3px 0 #1a1a2e;
+}
+
+/* ══ BASE ══ */
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(circle, #1a1a2e18 1px, transparent 1px);
+  background-size:24px 24px;
+}
+
+/* ══ HALFTONE BG ACCENT ══ */
+.halftone{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.ht-blob{position:absolute;border-radius:50%;opacity:.12}
+.ht-1{width:600px;height:600px;background:var(--pink);top:-150px;left:-150px;animation:htdrift 20s ease-in-out infinite alternate}
+.ht-2{width:500px;height:500px;background:var(--blue);bottom:-100px;right:-100px;animation:htdrift 16s ease-in-out infinite alternate-reverse}
+.ht-3{width:300px;height:300px;background:var(--yellow);top:40%;left:50%;animation:htdrift 14s ease-in-out infinite alternate}
+@keyframes htdrift{0%{transform:translate(0,0)}100%{transform:translate(30px,20px)}}
+
+/* ══ SPEED LINES (hero bg) ══ */
+.speed-lines{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:var(--r)}
+.speed-lines::before{content:'';position:absolute;inset:-100%;background:repeating-conic-gradient(from 0deg at 50% 50%,transparent 0deg,transparent 5.5deg,rgba(255,77,141,.06) 5.5deg,rgba(255,77,141,.06) 6deg);animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ══ PANEL BORDERS (webtoon style) ══ */
+.panel{
+  background:var(--panel);
+  border:var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.panel::before{content:'';position:absolute;inset:0;border-radius:calc(var(--r) - 2px);pointer-events:none}
+
+/* ══ LAYOUT ══ */
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 24px}
+
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:12px 0}
+nav.scrolled{background:rgba(255,253,232,.95);backdrop-filter:blur(8px);border-bottom:3px solid var(--ink)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:960px;margin:0 auto;padding:0 24px}
+.nav-logo{
+  font-family:'Bangers',cursive;
+  font-size:26px;
+  color:var(--ink);
+  text-decoration:none;
+  letter-spacing:.06em;
+  background:var(--yellow);
+  border:3px solid var(--ink);
+  border-radius:8px;
+  padding:2px 14px;
+  box-shadow:var(--shadow-sm);
+  transition:transform .15s;
+}
+.nav-logo:hover{transform:rotate(-2deg) scale(1.05)}
+.nav-links{display:flex;gap:4px;list-style:none}
+.nav-links a{
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  color:var(--ink);
+  padding:5px 12px;
+  border:2px solid transparent;
+  border-radius:20px;
+  transition:all .2s;
+  letter-spacing:.03em;
+}
+.nav-links a:hover{background:var(--pink);color:#fff;border-color:var(--ink);box-shadow:var(--shadow-sm)}
+.lang-btns{display:flex;gap:5px}
+.lang-btn{
+  border:2px solid var(--ink);
+  background:var(--panel);
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--ink);
+  transition:all .15s;
+}
+.lang-btn.active{background:var(--pink);color:#fff;box-shadow:var(--shadow-sm)}
+.lang-btn:hover{transform:translateY(-2px)}
+
+/* ══ HERO ══ */
+.hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 80px;position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:1fr 320px;gap:48px;align-items:center}
+
+/* speech bubble eyebrow */
+.speech-bubble{
+  display:inline-block;
+  background:var(--yellow);
+  border:3px solid var(--ink);
+  border-radius:16px;
+  padding:6px 18px;
+  font-size:13px;
+  font-weight:700;
+  color:var(--ink);
+  position:relative;
+  margin-bottom:18px;
+  box-shadow:var(--shadow-sm);
+  opacity:0;
+  animation:popIn .5s .1s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+.speech-bubble::after{
+  content:'';position:absolute;bottom:-12px;left:20px;
+  border:6px solid transparent;
+  border-top-color:var(--ink);
+}
+.speech-bubble::before{
+  content:'';position:absolute;bottom:-8px;left:21px;
+  border:5px solid transparent;
+  border-top-color:var(--yellow);
+  z-index:1;
+}
+
+.hero-title{
+  font-family:'Bangers',cursive;
+  font-size:clamp(52px,7vw,80px);
+  line-height:1.0;
+  color:var(--ink);
+  margin-bottom:8px;
+  letter-spacing:.04em;
+  opacity:0;
+  animation:slideRight .6s .25s cubic-bezier(.34,1.3,.64,1) forwards;
+}
+.hero-title .stroke{
+  -webkit-text-stroke:3px var(--ink);
+  color:var(--pink);
+}
+.hero-title .under{
+  display:inline-block;
+  background:var(--yellow);
+  border-radius:6px;
+  padding:0 8px;
+  transform:rotate(-1deg);
+  display:inline-block;
+}
+
+.hero-sub{
+  font-size:15px;
+  line-height:1.7;
+  color:var(--ink);
+  margin-bottom:28px;
+  max-width:460px;
+  opacity:0;
+  animation:fadeUp .5s .45s forwards;
+  background:rgba(255,255,255,.7);
+  border-left:4px solid var(--pink);
+  padding:10px 16px;
+  border-radius:0 8px 8px 0;
+}
+
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;opacity:0;animation:fadeUp .5s .6s forwards}
+.wt-tag{
+  background:var(--panel);
+  border:2px solid var(--ink);
+  padding:5px 14px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+  box-shadow:var(--shadow-sm);
+  transition:transform .2s;
+}
+.wt-tag:hover{transform:translateY(-3px) rotate(-1deg)}
+
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeUp .5s .75s forwards}
+.btn-wt{
+  font-family:'Nunito',sans-serif;
+  font-weight:800;
+  font-size:14px;
+  padding:12px 28px;
+  border:3px solid var(--ink);
+  border-radius:28px;
+  text-decoration:none;
+  display:inline-block;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:var(--shadow);
+}
+.btn-wt:hover{transform:translateY(-3px);box-shadow:8px 8px 0 var(--ink)}
+.btn-wt.primary{background:var(--pink);color:#fff}
+.btn-wt.ghost{background:var(--yellow);color:var(--ink)}
+
+/* ══ PHOTO PANEL ══ */
+.photo-card{position:relative;opacity:0;animation:popIn .7s .2s cubic-bezier(.34,1.4,.64,1) forwards}
+.photo-frame{
+  width:100%;
+  aspect-ratio:3/4;
+  border:var(--border);
+  border-width:4px;
+  border-radius:var(--r);
+  overflow:hidden;
+  background:linear-gradient(145deg,#ffd6e8,#d6e8ff);
+  position:relative;
+  box-shadow:8px 8px 0 var(--ink);
+}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s}
+.photo-frame img.loaded{opacity:1}
+.photo-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ink);font-size:13px;font-weight:700}
+.photo-placeholder i{font-size:44px;opacity:.35}
+.upload-photo-btn{
+  position:absolute;bottom:14px;right:14px;
+  background:var(--yellow);
+  border:2px solid var(--ink);
+  border-radius:20px;
+  padding:7px 14px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--ink);
+  display:flex;align-items:center;gap:6px;
+  box-shadow:var(--shadow-sm);
+  transition:transform .2s;
+}
+.upload-photo-btn:hover{transform:scale(1.05)}
+
+/* corner accent panels */
+.corner-panel{position:absolute;background:var(--mint);border:3px solid var(--ink);border-radius:10px;z-index:-1}
+.cp1{width:80px;height:80px;top:-12px;left:-12px;transform:rotate(-6deg)}
+.cp2{width:56px;height:56px;bottom:-10px;right:-10px;transform:rotate(6deg);background:var(--orange)}
+
+/* floating sfx badge */
+.sfx-badge{
+  position:absolute;
+  top:-18px;right:-14px;
+  font-family:'Bangers',cursive;
+  font-size:28px;
+  color:var(--pink);
+  -webkit-text-stroke:2px var(--ink);
+  letter-spacing:.05em;
+  transform:rotate(12deg);
+  animation:wobble 3s ease-in-out infinite;
+  z-index:2;
+}
+@keyframes wobble{0%,100%{transform:rotate(12deg) scale(1)}50%{transform:rotate(8deg) scale(1.1)}}
+
+.floating-badge{
+  position:absolute;
+  bottom:20px;left:-36px;
+  background:var(--panel);
+  border:3px solid var(--ink);
+  border-radius:14px;
+  padding:10px 16px;
+  box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:10px;
+  animation:float 3.5s ease-in-out infinite;
+  z-index:2;
+}
+.badge-icon{width:34px;height:34px;border-radius:8px;background:var(--yellow);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:16px}
+.badge-text p:first-child{font-size:12px;font-weight:800;color:var(--ink)}
+.badge-text p:last-child{font-size:11px;color:#666}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ══ SECTIONS ══ */
+section{padding:88px 0;position:relative;z-index:1}
+.section-label{
+  display:inline-block;
+  font-family:'Bangers',cursive;
+  font-size:13px;
+  letter-spacing:.18em;
+  background:var(--pink);
+  color:#fff;
+  border:2px solid var(--ink);
+  border-radius:6px;
+  padding:2px 12px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow-sm);
+}
+.section-title{
+  font-family:'Bangers',cursive;
+  font-size:clamp(32px,4.5vw,52px);
+  color:var(--ink);
+  margin-bottom:48px;
+  letter-spacing:.04em;
+  line-height:1.05;
+}
+.section-title span{color:var(--pink)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(.25,.46,.45,.94),transform .6s cubic-bezier(.25,.46,.45,.94)}
+.reveal.in{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-28px);transition:opacity .6s,transform .6s}
+.reveal-left.in{opacity:1;transform:none}
+
+/* ══ ABOUT ══ */
+.about-strip{
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+  background:var(--panel);
+  border:var(--border);
+  border-radius:var(--r);
+  padding:40px;
+  box-shadow:var(--shadow);
+}
+.about-stat{text-align:center;padding:20px;background:var(--bg);border:2px solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm)}
+.stat-num{font-family:'Bangers',cursive;font-size:52px;color:var(--pink);display:block;line-height:1}
+.stat-label{font-size:12px;font-weight:700;color:var(--ink);margin-top:6px;letter-spacing:.04em}
+
+/* ══ SKILLS ══ */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.skill-card{
+  background:var(--panel);
+  border:var(--border);
+  border-radius:var(--r);
+  padding:22px;
+  box-shadow:var(--shadow);
+  transition:transform .25s,box-shadow .25s;
+}
+.skill-card:hover{transform:translateY(-5px) rotate(-1deg);box-shadow:8px 8px 0 var(--ink)}
+.skill-icon{width:46px;height:46px;border-radius:10px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+.skill-card h3{font-size:15px;font-weight:800;margin-bottom:6px;font-family:'Nunito',sans-serif}
+.skill-card p{font-size:12px;color:#555;line-height:1.6}
+
+/* ══ TIMELINE ══ */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:grid;grid-template-columns:110px 20px 1fr;gap:0 20px;position:relative}
+.tl-date{text-align:right;font-size:11px;font-weight:700;color:var(--pink);padding-top:4px;line-height:1.5}
+.tl-line{display:flex;flex-direction:column;align-items:center}
+.tl-dot{width:18px;height:18px;border-radius:50%;background:var(--yellow);border:3px solid var(--ink);box-shadow:var(--shadow-sm);flex-shrink:0;margin-top:2px}
+.tl-track{flex:1;width:3px;background:var(--ink);margin:4px 0;opacity:.2}
+.tl-content{
+  padding-bottom:36px;
+  background:var(--panel);
+  border:2px solid var(--ink);
+  border-radius:10px;
+  padding:16px 20px 16px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+}
+.tl-content::before{content:'';position:absolute;left:-10px;top:12px;width:10px;height:3px;background:var(--ink)}
+.tl-content h3{font-size:16px;font-weight:800;margin-bottom:4px;color:var(--ink)}
+.tl-content .org{font-size:12px;color:var(--pink);margin-bottom:8px;font-weight:700;display:inline-block;background:rgba(255,77,141,.1);padding:2px 8px;border-radius:6px}
+.tl-content p{font-size:13px;color:#555;line-height:1.7}
+
+/* ══ EDUCATION ══ */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.edu-card{
+  background:var(--panel);
+  border:var(--border);
+  border-radius:var(--r);
+  padding:26px;
+  box-shadow:var(--shadow);
+  transition:transform .25s;
+  position:relative;
+  overflow:hidden;
+}
+.edu-card::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.15}
+.edu-card:nth-child(1)::after{background:var(--purple)}
+.edu-card:nth-child(2)::after{background:var(--orange)}
+.edu-card:nth-child(3)::after{background:var(--mint)}
+.edu-card:hover{transform:translateY(-4px) rotate(.5deg)}
+.edu-icon{width:50px;height:50px;border-radius:12px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+.edu-card h3{font-size:15px;font-weight:800;margin-bottom:4px;font-family:'Nunito',sans-serif}
+.edu-card .field{font-size:12px;color:var(--pink);margin-bottom:8px;font-weight:700}
+.edu-card .year{font-size:11px;color:#888;font-weight:700}
+
+/* ══ PROJECTS ══ */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:20px}
+.proj-card{
+  background:var(--panel);
+  border:var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:transform .3s,box-shadow .3s;
+}
+.proj-card:hover{transform:translateY(-6px) rotate(-.5deg);box-shadow:10px 10px 0 var(--ink)}
+.proj-thumb{
+  height:130px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;
+  border-bottom:3px solid var(--ink);
+  position:relative;overflow:hidden;
+}
+.proj-thumb .panel-number{
+  position:absolute;top:8px;left:12px;
+  font-family:'Bangers',cursive;
+  font-size:36px;
+  color:rgba(255,255,255,.3);
+  -webkit-text-stroke:1px rgba(0,0,0,.2);
+}
+.proj-body{padding:20px}
+.proj-body h3{font-size:15px;font-weight:800;margin-bottom:7px}
+.proj-body p{font-size:12px;color:#555;line-height:1.6;margin-bottom:12px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:5px}
+.proj-tag{font-size:10px;padding:3px 9px;border-radius:10px;font-weight:700;border:1.5px solid var(--ink)}
+
+/* ══ CONTACT ══ */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.contact-card{
+  background:var(--panel);
+  border:var(--border);
+  border-radius:var(--r);
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+.contact-card h3{font-size:16px;font-weight:800;margin-bottom:6px}
+.social-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.social-link{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 18px;
+  background:var(--bg);
+  border:2px solid var(--ink);
+  border-radius:20px;
+  text-decoration:none;
+  color:var(--ink);
+  font-size:13px;
+  font-weight:700;
+  transition:all .2s;
+  box-shadow:var(--shadow-sm);
+}
+.social-link:hover{background:var(--pink);color:#fff;transform:translateY(-2px);box-shadow:4px 4px 0 var(--ink)}
+.social-editor{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.social-input-row{display:flex;gap:7px;align-items:center}
+.social-input-row input{flex:1;border:2px solid var(--ink);border-radius:8px;padding:8px 12px;font-size:12px;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);outline:none}
+.social-input-row input:focus{border-color:var(--pink)}
+.icon-select{border:2px solid var(--ink);border-radius:8px;padding:8px 10px;font-size:12px;background:var(--bg);color:var(--ink);font-family:'Nunito',sans-serif;outline:none}
+.add-social-btn{background:var(--yellow);border:2px solid var(--ink);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;color:var(--ink);box-shadow:var(--shadow-sm);transition:transform .2s;margin-top:10px}
+.add-social-btn:hover{transform:translateY(-2px)}
+.rm-social{background:var(--orange);border:2px solid var(--ink);border-radius:6px;padding:6px 10px;font-size:11px;color:#fff;font-weight:700}
+
+/* ══ FOOTER ══ */
+footer{
+  text-align:center;padding:48px 0;
+  position:relative;z-index:1;
+  border-top:3px solid var(--ink);
+  background:var(--yellow);
+}
+footer p{font-size:13px;font-weight:700;color:var(--ink)}
+footer a{color:var(--pink);text-decoration:none}
+
+/* ══ COMIC PANEL DECORATORS ══ */
+.panel-dots{
+  position:absolute;bottom:0;right:0;width:90px;height:90px;
+  background-image:radial-gradient(circle,#1a1a2e22 2px,transparent 2px);
+  background-size:10px 10px;
+  border-radius:0 0 var(--r) 0;
+  pointer-events:none;
+}
+
+/* ══ RTL ══ */
+[dir="rtl"] .tl-item{grid-template-columns:1fr 20px 110px}
+[dir="rtl"] .tl-date{text-align:left}
+[dir="rtl"] .tl-content::before{left:auto;right:-10px}
+[dir="rtl"] .hero-sub{border-left:none;border-right:4px solid var(--pink);border-radius:8px 0 0 8px}
+[dir="rtl"] .speech-bubble::after{left:auto;right:20px}
+[dir="rtl"] .speech-bubble::before{left:auto;right:21px}
+
+/* ══ KEYFRAMES ══ */
+@keyframes popIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:720px){
+  .hero-grid,.contact-grid,.about-strip{grid-template-columns:1fr}
+  .hero-grid{gap:36px}
+  .photo-card{order:-1}
+  .photo-frame{aspect-ratio:1;max-width:260px;margin:0 auto}
+  .floating-badge{left:0}
+  .nav-links{display:none}
+  [dir="rtl"] .tl-item{grid-template-columns:110px 20px 1fr}
+  [dir="rtl"] .tl-date{text-align:right}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<div class="halftone">
+  <div class="ht-blob ht-1"></div>
+  <div class="ht-blob ht-2"></div>
+  <div class="ht-blob ht-3"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">✦ Puspa</a>
+    <ul class="nav-links">
+      <li><a href="#about"    data-i18n="nav.about">About</a></li>
+      <li><a href="#skills"   data-i18n="nav.skills">Skills</a></li>
+      <li><a href="#exp"      data-i18n="nav.exp">Experience</a></li>
+      <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="#contact"  data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="lang-btns">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ar">ع</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="speed-lines" style="position:fixed;inset:0;pointer-events:none;z-index:0"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="speech-bubble" data-i18n="hero.eyebrow">Educator · Developer · Digital Strategist</div>
+        <h1 class="hero-title">
+          <span class="stroke">Puspa</span><br/>
+          <span class="under">Ratih</span>
+        </h1>
+        <p class="hero-sub" data-i18n="hero.sub">Bridging education and technology — building LMS platforms, institutional websites, and data-driven learning tools that make a real difference in Islamic schools across Indonesia.</p>
+        <div class="hero-tags">
+          <span class="wt-tag">🎓 EdTech</span>
+          <span class="wt-tag">💻 Web Dev</span>
+          <span class="wt-tag">📊 Data Science</span>
+          <span class="wt-tag">🕌 Islamic Ed</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#projects" class="btn-wt primary" data-i18n="hero.cta1">View My Work</a>
+          <a href="#contact"  class="btn-wt ghost"   data-i18n="hero.cta2">Get in Touch</a>
+        </div>
+      </div>
+
+      <!-- PHOTO -->
+      <div class="photo-card">
+        <div class="corner-panel cp1"></div>
+        <div class="corner-panel cp2"></div>
+        <div class="sfx-badge">WOW!</div>
+        <div class="photo-frame" id="photoFrame">
+          <img id="profileImg" src="" alt="Puspa Ratih"/>
+          <div class="photo-placeholder" id="photoPlaceholder">
+            <i class="fa-regular fa-image"></i>
+            <span data-i18n="photo.hint">Add your photo</span>
+          </div>
+          <label class="upload-photo-btn" for="photoInput">
+            <i class="fa-solid fa-camera"></i>
+            <span data-i18n="photo.btn">Upload Photo</span>
+          </label>
+          <input type="file" id="photoInput" accept="image/*" style="display:none"/>
+        </div>
+        <div class="floating-badge">
+          <div class="badge-icon">✨</div>
+          <div class="badge-text">
+            <p data-i18n="badge.top">Top Skills</p>
+            <p>EdTech · ML · Web Dev</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="section-label" data-i18n="about.label">About Me</p>
+      <h2 class="section-title" data-i18n="about.title">A little about my <span>journey</span></h2>
+    </div>
+    <div class="about-strip reveal">
+      <div>
+        <p style="font-size:14px;line-height:1.85;color:#333;margin-bottom:14px" data-i18n="about.text">I'm a dedicated educator and digital developer with nearly 3 years of experience teaching English and Biology at the Islamic Boarding School level. Alongside teaching, I build digital solutions — from LMS platforms and AI-powered apps to full institutional websites — for schools and foundations, often at no cost to empower communities that need it most.</p>
+        <p style="font-size:14px;line-height:1.85;color:#333" data-i18n="about.text2">Currently pursuing a Bachelor's in Educational Technology at Universitas Terbuka, while training in Data Science through Coding Camp powered by DBS Foundation.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="about-stat"><span class="stat-num">3+</span><span class="stat-label" data-i18n="stat.years">Years Teaching</span></div>
+        <div class="about-stat"><span class="stat-num">7</span><span class="stat-label" data-i18n="stat.projects">Projects</span></div>
+        <div class="about-stat"><span class="stat-num">3</span><span class="stat-label" data-i18n="stat.langs">Languages</span></div>
+        <div class="about-stat"><span class="stat-num">∞</span><span class="stat-label" data-i18n="stat.passion">EdTech Love</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="section-label" data-i18n="skills.label">What I Do</p>
+      <h2 class="section-title" data-i18n="skills.title">Skills & <span>Expertise</span></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#ffd6e8">🧠</div>
+        <h3 data-i18n="skill.lms">LMS Development</h3>
+        <p data-i18n="skill.lms.d">Building full learning management systems tailored for schools and pesantren using modern web tools.</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#d6e8ff">🌐</div>
+        <h3 data-i18n="skill.web">Website Development</h3>
+        <p data-i18n="skill.web.d">Creating institutional websites for foundations & organizations — often pro bono for Islamic schools.</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#d6ffe8">📊</div>
+        <h3 data-i18n="skill.data">Data Science</h3>
+        <p data-i18n="skill.data.d">Machine learning, data analysis, and AI-powered prediction apps using Python, TensorFlow & FastAPI.</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#fff3d6">📚</div>
+        <h3 data-i18n="skill.teach">Teaching</h3>
+        <p data-i18n="skill.teach.d">English & Biology teacher with a TPACK-informed approach, bringing EdTech into every classroom lesson.</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#ead6ff">🎙️</div>
+        <h3 data-i18n="skill.speak">Public Speaking</h3>
+        <p data-i18n="skill.speak.d">Confident communicator across training sessions, workshops, and school community events.</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon" style="background:#ffd6d6">📅</div>
+        <h3 data-i18n="skill.sched">Scheduling & Admin</h3>
+        <p data-i18n="skill.sched.d">Digital administration, NIY/NIS document generation, and scheduling systems for boarding schools.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="exp">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="section-label" data-i18n="exp.label">Experience</p>
+      <h2 class="section-title" data-i18n="exp.title">Where I've <span>Worked</span></h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-date">Jan 2026<br/><span data-i18n="now">Present</span></div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-track"></div></div>
+        <div class="tl-content">
+          <div class="panel-dots"></div>
+          <h3 data-i18n="job1.title">Student Trainee — Data Science</h3>
+          <span class="org">Coding Camp × DBS Foundation</span>
+          <p data-i18n="job1.desc">Hands-on training in machine learning, data analysis, and AI application development. Built a full-stack AI job prediction app deployed to Vercel & Hugging Face Spaces.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Jul 2023<br/><span data-i18n="now">Present</span></div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-track"></div></div>
+        <div class="tl-content">
+          <div class="panel-dots"></div>
+          <h3 data-i18n="job2.title">Islamic Teacher & Digital Developer</h3>
+          <span class="org">Yayasan Darul Musthofa, Sidoarjo</span>
+          <p data-i18n="job2.desc">Teaching English and Biology at the secondary level while simultaneously developing the school's digital infrastructure — from its official website to the Portal Digital Santri web app.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2014<br/>2020</div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-track"></div></div>
+        <div class="tl-content">
+          <div class="panel-dots"></div>
+          <h3 data-i18n="job3.title">Catering Manager & Co-Owner</h3>
+          <span class="org">CV. Cipta Citra Boga, Indonesia</span>
+          <p data-i18n="job3.desc">Managed operations for a corporate catering business — planning menus, overseeing staff, and building client relationships across East Java.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="edu">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="section-label" data-i18n="edu.label">Education</p>
+      <h2 class="section-title" data-i18n="edu.title">Academic <span>Background</span></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-icon" style="background:#ead6ff">🎓</div>
+        <h3>Universitas Terbuka</h3>
+        <p class="field" data-i18n="edu1.field">Bachelor of Educational Technology</p>
+        <p class="year">2023 — <span data-i18n="now">Present</span></p>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-icon" style="background:#ffd6b3">🍽️</div>
+        <h3>Akademi Pariwisata Majapahit</h3>
+        <p class="field" data-i18n="edu2.field">Diploma — Culinary Arts & Chef Training</p>
+        <p class="year">2020 — 2022</p>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-icon" style="background:#d6ffe8">🤖</div>
+        <h3 data-i18n="cert.title">Certification</h3>
+        <p class="field" data-i18n="cert.field">Machine Learning untuk Pemula — Dicoding</p>
+        <p class="year">2025</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="section-label" data-i18n="proj.label">Projects</p>
+      <h2 class="section-title" data-i18n="proj.title">Things I've <span>Built</span></h2>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#ead6ff,#d6e8ff)">
+          <span class="panel-number">01</span>🏫
+        </div>
+        <div class="proj-body">
+          <h3>Portal Digital Santri</h3>
+          <p data-i18n="proj1.desc">Role-based web app for Darul Musthofa — parents, teachers & admins. Password-free login for non-technical users. Built with React & Node.js.</p>
+          <div class="proj-tags">
+            <span class="proj-tag" style="background:#ead6ff">React</span>
+            <span class="proj-tag" style="background:#d6ffe8">Node.js</span>
+            <span class="proj-tag" style="background:#d6e8ff">GitHub Pages</span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#d6ffe8,#ffd6e8)">
+          <span class="panel-number">02</span>🤖
+        </div>
+        <div class="proj-body">
+          <h3>Ready to Perform!</h3>
+          <p data-i18n="proj2.desc">AI-powered job readiness prediction app (CC26-PSU078). TensorFlow model on Hugging Face, FastAPI backend, React+Vite frontend on Vercel.</p>
+          <div class="proj-tags">
+            <span class="proj-tag" style="background:#ffd6e8">TensorFlow</span>
+            <span class="proj-tag" style="background:#d6ffe8">FastAPI</span>
+            <span class="proj-tag" style="background:#ead6ff">Vercel</span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#ffd6e8,#fff3d6)">
+          <span class="panel-number">03</span>🕌
+        </div>
+        <div class="proj-body">
+          <h3>Ponpes Darul Musthofa</h3>
+          <p data-i18n="proj3.desc">Full institutional website for the boarding school — green & gold Islamic theme, hosted on GitHub Pages / Netlify. Built entirely pro bono.</p>
+          <div class="proj-tags">
+            <span class="proj-tag" style="background:#d6ffe8">HTML/CSS</span>
+            <span class="proj-tag" style="background:#d6e8ff">Netlify</span>
+            <span class="proj-tag" style="background:#fff3d6">Pro Bono ♡</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="section-label" data-i18n="contact.label">Contact</p>
+      <h2 class="section-title" data-i18n="contact.title">Let's <span>Connect!</span></h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <h3 data-i18n="contact.social">Find me on</h3>
+        <p style="font-size:12px;color:#666;margin-top:4px" data-i18n="contact.socialsub">Connect with me on these platforms</p>
+        <div class="social-links" id="socialLinks"></div>
+      </div>
+      <div class="contact-card">
+        <h3 data-i18n="contact.edit">Edit My Socials</h3>
+        <p style="font-size:12px;color:#666;margin-top:4px" data-i18n="contact.editsub">Add or remove your social media links</p>
+        <div class="social-editor" id="socialEditor"></div>
+        <button class="add-social-btn" id="addSocialBtn">
+          <i class="fa-solid fa-plus" style="margin-right:5px"></i><span data-i18n="contact.add">Add Social</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <strong>Puspa Ratih</strong> · <a href="mailto:edupuspa@gmail.com">edupuspa@gmail.com</a> · Made with ♡ for GitHub Pages</p>
+</footer>
+
+<script>
+/* ══ i18n ══ */
+const T={
+  en:{
+    "nav.about":"About","nav.skills":"Skills","nav.exp":"Experience","nav.projects":"Projects","nav.contact":"Contact",
+    "hero.eyebrow":"Educator · Developer · Digital Strategist",
+    "hero.sub":"Bridging education and technology — building LMS platforms, institutional websites, and data-driven learning tools that make a real difference in Islamic schools across Indonesia.",
+    "hero.cta1":"View My Work","hero.cta2":"Get in Touch",
+    "photo.hint":"Add your photo","photo.btn":"Upload Photo","badge.top":"Top Skills",
+    "about.label":"About Me","about.title":"A little about my journey",
+    "about.text":"I'm a dedicated educator and digital developer with nearly 3 years of experience teaching English and Biology at the Islamic Boarding School level. Alongside teaching, I build digital solutions — from LMS platforms and AI-powered apps to full institutional websites — for schools and foundations, often at no cost to empower communities that need it most.",
+    "about.text2":"Currently pursuing a Bachelor's in Educational Technology at Universitas Terbuka, while training in Data Science through Coding Camp powered by DBS Foundation.",
+    "stat.years":"Years Teaching","stat.projects":"Projects","stat.langs":"Languages","stat.passion":"EdTech Love",
+    "skills.label":"What I Do","skills.title":"Skills & Expertise",
+    "skill.lms":"LMS Development","skill.lms.d":"Building full learning management systems tailored for schools and pesantren using modern web tools.",
+    "skill.web":"Website Development","skill.web.d":"Creating institutional websites for foundations & organizations — often pro bono for Islamic schools.",
+    "skill.data":"Data Science","skill.data.d":"Machine learning, data analysis, and AI-powered prediction apps using Python, TensorFlow & FastAPI.",
+    "skill.teach":"Teaching","skill.teach.d":"English & Biology teacher with a TPACK-informed approach, bringing EdTech into every classroom lesson.",
+    "skill.speak":"Public Speaking","skill.speak.d":"Confident communicator across training sessions, workshops, and school community events.",
+    "skill.sched":"Scheduling & Admin","skill.sched.d":"Digital administration, NIY/NIS document generation, and scheduling systems for boarding schools.",
+    "exp.label":"Experience","exp.title":"Where I've Worked","now":"Present",
+    "job1.title":"Student Trainee — Data Science","job1.desc":"Hands-on training in machine learning, data analysis, and AI application development. Built a full-stack AI job prediction app deployed to Vercel & Hugging Face Spaces.",
+    "job2.title":"Islamic Teacher & Digital Developer","job2.desc":"Teaching English and Biology at the secondary level while simultaneously developing the school's digital infrastructure — from its official website to the Portal Digital Santri web app.",
+    "job3.title":"Catering Manager & Co-Owner","job3.desc":"Managed operations for a corporate catering business — planning menus, overseeing staff, and building client relationships across East Java.",
+    "edu.label":"Education","edu.title":"Academic Background",
+    "edu1.field":"Bachelor of Educational Technology","edu2.field":"Diploma — Culinary Arts & Chef Training",
+    "cert.title":"Certification","cert.field":"Machine Learning untuk Pemula — Dicoding",
+    "proj.label":"Projects","proj.title":"Things I've Built",
+    "proj1.desc":"Role-based web app for Darul Musthofa — parents, teachers & admins. Password-free login for non-technical users. Built with React & Node.js.",
+    "proj2.desc":"AI-powered job readiness prediction app (CC26-PSU078). TensorFlow model on Hugging Face, FastAPI backend, React+Vite frontend on Vercel.",
+    "proj3.desc":"Full institutional website for the boarding school — green & gold Islamic theme, hosted on GitHub Pages / Netlify. Built entirely pro bono.",
+    "contact.label":"Contact","contact.title":"Let's Connect!",
+    "contact.social":"Find me on","contact.socialsub":"Connect with me on these platforms",
+    "contact.edit":"Edit My Socials","contact.editsub":"Add or remove your social media links","contact.add":"Add Social"
+  },
+  ar:{
+    "nav.about":"عني","nav.skills":"المهارات","nav.exp":"الخبرة","nav.projects":"المشاريع","nav.contact":"تواصل",
+    "hero.eyebrow":"معلمة · مطورة · استراتيجية رقمية",
+    "hero.sub":"أجمع بين التعليم والتكنولوجيا — أبني منصات تعليمية ومواقع مؤسسية وأدوات تعلّم ذكية تُحدث فرقاً حقيقياً في المدارس الإسلامية في إندونيسيا.",
+    "hero.cta1":"أعمالي","hero.cta2":"تواصل معي",
+    "photo.hint":"أضف صورتك","photo.btn":"رفع صورة","badge.top":"أبرز المهارات",
+    "about.label":"عني","about.title":"قليل عن مسيرتي",
+    "about.text":"أنا معلمة ومطورة رقمية متفانية بخبرة تقارب 3 سنوات في تدريس اللغة الإنجليزية والأحياء في المدارس الإسلامية الداخلية. إلى جانب التدريس، أبني حلولاً رقمية — من منصات إدارة التعلم إلى التطبيقات الذكية والمواقع المؤسسية — في الغالب مجاناً لخدمة المجتمعات التي تحتاجها أكثر.",
+    "about.text2":"أدرس حالياً بكالوريوس تكنولوجيا التعليم في جامعة تيرتوكا، وأتدرب في علم البيانات ضمن معسكر Coding Camp بدعم من مؤسسة DBS.",
+    "stat.years":"سنوات التدريس","stat.projects":"مشاريع","stat.langs":"لغات","stat.passion":"شغف EdTech",
+    "skills.label":"ما أفعله","skills.title":"المهارات والخبرات",
+    "skill.lms":"تطوير منصات LMS","skill.lms.d":"بناء أنظمة إدارة تعلم متكاملة مصممة للمدارس والمعاهد باستخدام أحدث الأدوات.",
+    "skill.web":"تطوير المواقع","skill.web.d":"إنشاء مواقع مؤسسية للمؤسسات والمنظمات — غالباً مجاناً للمدارس الإسلامية.",
+    "skill.data":"علم البيانات","skill.data.d":"تعلم الآلة وتحليل البيانات وتطبيقات الذكاء الاصطناعي باستخدام Python وTensorFlow وFastAPI.",
+    "skill.teach":"التدريس","skill.teach.d":"معلمة لغة إنجليزية وأحياء بأسلوب TPACK، تدمج التكنولوجيا في كل درس.",
+    "skill.speak":"الخطابة","skill.speak.d":"متواصلة واثقة في الدورات التدريبية وورش العمل والفعاليات المجتمعية.",
+    "skill.sched":"الجدولة والإدارة","skill.sched.d":"إدارة رقمية وإنشاء وثائق NIY/NIS وأنظمة جدولة للمدارس الداخلية.",
+    "exp.label":"الخبرة","exp.title":"أماكن عملي","now":"الحاضر",
+    "job1.title":"متدربة — علم البيانات","job1.desc":"تدريب عملي في تعلم الآلة وتحليل البيانات وتطوير تطبيقات الذكاء الاصطناعي.",
+    "job2.title":"معلمة إسلامية ومطورة رقمية","job2.desc":"أدرّس اللغة الإنجليزية والأحياء في المرحلة الثانوية وأطوّر البنية التحتية الرقمية للمدرسة.",
+    "job3.title":"مديرة تموين ومالكة مشاركة","job3.desc":"أدارت عمليات مشروع تموين للشركات في جاوة الشرقية.",
+    "edu.label":"التعليم","edu.title":"الخلفية الأكاديمية",
+    "edu1.field":"بكالوريوس تكنولوجيا التعليم","edu2.field":"دبلوم — فنون الطهي",
+    "cert.title":"شهادة","cert.field":"تعلم الآلة للمبتدئين — Dicoding",
+    "proj.label":"المشاريع","proj.title":"ما أنجزته",
+    "proj1.desc":"تطبيق ويب بأدوار متعددة لمدرسة دار المصطفى. تسجيل دخول بدون كلمة مرور للمستخدمين غير التقنيين.",
+    "proj2.desc":"تطبيق تنبؤ بجاهزية العمل بالذكاء الاصطناعي. نموذج TensorFlow على Hugging Face، واجهة FastAPI وReact+Vite على Vercel.",
+    "proj3.desc":"موقع مؤسسي متكامل للمدرسة الداخلية — ثيم إسلامي أخضر وذهبي. بُني بالكامل تطوعاً.",
+    "contact.label":"تواصل","contact.title":"لنتواصل!",
+    "contact.social":"تجدني على","contact.socialsub":"تواصل معي عبر هذه المنصات",
+    "contact.edit":"تعديل حساباتي","contact.editsub":"إضافة أو إزالة روابط التواصل الاجتماعي","contact.add":"إضافة حساب"
+  },
+  de:{
+    "nav.about":"Über mich","nav.skills":"Fähigkeiten","nav.exp":"Erfahrung","nav.projects":"Projekte","nav.contact":"Kontakt",
+    "hero.eyebrow":"Lehrerin · Entwicklerin · Digitale Strategin",
+    "hero.sub":"Ich verbinde Bildung und Technologie — ich entwickle LMS-Plattformen, institutionelle Websites und datengestützte Lerntools für islamische Schulen in Indonesien.",
+    "hero.cta1":"Meine Projekte","hero.cta2":"Kontakt aufnehmen",
+    "photo.hint":"Foto hinzufügen","photo.btn":"Foto hochladen","badge.top":"Top-Fähigkeiten",
+    "about.label":"Über mich","about.title":"Ein bisschen über meinen Weg",
+    "about.text":"Ich bin eine engagierte Lehrerin und digitale Entwicklerin mit fast 3 Jahren Erfahrung im Unterrichten von Englisch und Biologie an islamischen Internatsschulen. Neben dem Unterrichten entwickle ich digitale Lösungen — oft kostenlos für Gemeinschaften, die es am meisten brauchen.",
+    "about.text2":"Derzeit studiere ich Educational Technology (B.Tech) an der Universitas Terbuka und bilde mich in Data Science beim Coding Camp der DBS Foundation weiter.",
+    "stat.years":"Jahre Unterricht","stat.projects":"Projekte","stat.langs":"Sprachen","stat.passion":"EdTech-Leidenschaft",
+    "skills.label":"Was ich tue","skills.title":"Fähigkeiten & Expertise",
+    "skill.lms":"LMS-Entwicklung","skill.lms.d":"Aufbau vollständiger Lernmanagementsysteme für Schulen und Pesantren mit modernen Web-Tools.",
+    "skill.web":"Webentwicklung","skill.web.d":"Erstellung institutioneller Websites für Stiftungen & Organisationen — oft kostenlos für islamische Schulen.",
+    "skill.data":"Data Science","skill.data.d":"Machine Learning, Datenanalyse und KI-gestützte Vorhersage-Apps mit Python, TensorFlow & FastAPI.",
+    "skill.teach":"Lehren","skill.teach.d":"Englisch- und Biologielehrerin mit TPACK-Ansatz, die EdTech in jeden Unterricht integriert.",
+    "skill.speak":"Öffentliches Sprechen","skill.speak.d":"Sichere Kommunikatorin bei Schulungen, Workshops und Schulveranstaltungen.",
+    "skill.sched":"Planung & Verwaltung","skill.sched.d":"Digitale Verwaltung, Erstellung von NIY/NIS-Dokumenten und Planungssysteme.",
+    "exp.label":"Erfahrung","exp.title":"Meine Berufserfahrung","now":"Heute",
+    "job1.title":"Trainee — Data Science","job1.desc":"Praxisorientiertes Training in Machine Learning, Datenanalyse und KI-Anwendungsentwicklung.",
+    "job2.title":"Islamische Lehrerin & Digitale Entwicklerin","job2.desc":"Unterrichte Englisch und Biologie und entwickle gleichzeitig die digitale Infrastruktur der Schule.",
+    "job3.title":"Catering-Managerin & Mitinhaberin","job3.desc":"Verwaltete den Betrieb eines Unternehmens-Catering-Unternehmens in Ostjava.",
+    "edu.label":"Bildung","edu.title":"Akademischer Hintergrund",
+    "edu1.field":"Bachelor Educational Technology","edu2.field":"Diplom — Kulinarische Künste & Kochausbildung",
+    "cert.title":"Zertifizierung","cert.field":"Machine Learning für Anfänger — Dicoding",
+    "proj.label":"Projekte","proj.title":"Was ich entwickelt habe",
+    "proj1.desc":"Rollenbasierte Web-App für Darul Musthofa. Passwortfreier Login für nicht-technische Benutzer.",
+    "proj2.desc":"KI-gestützte App zur Berufseignungsvorhersage. TensorFlow-Modell auf Hugging Face, FastAPI-Backend, React+Vite auf Vercel.",
+    "proj3.desc":"Vollständige institutionelle Website für die Internatsschule. Vollständig pro bono entwickelt.",
+    "contact.label":"Kontakt","contact.title":"Lassen Sie uns verbinden!",
+    "contact.social":"Finden Sie mich auf","contact.socialsub":"Verbinden Sie sich mit mir auf diesen Plattformen",
+    "contact.edit":"Meine Socials bearbeiten","contact.editsub":"Social-Media-Links hinzufügen oder entfernen","contact.add":"Social hinzufügen"
+  }
+};
+
+let currentLang='en';
+function applyLang(lang){
+  currentLang=lang;
+  const d=T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(d[k])el.textContent=d[k];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+}
+document.querySelectorAll('.lang-btn').forEach(btn=>btn.addEventListener('click',()=>applyLang(btn.dataset.lang)));
+
+/* ══ SOCIALS ══ */
+const ICON_MAP={
+  linkedin:{icon:'fa-brands fa-linkedin',color:'#0A66C2'},
+  instagram:{icon:'fa-brands fa-instagram',color:'#E1306C'},
+  github:{icon:'fa-brands fa-github',color:'#333'},
+  youtube:{icon:'fa-brands fa-youtube',color:'#FF0000'},
+  twitter:{icon:'fa-brands fa-x-twitter',color:'#000'},
+  facebook:{icon:'fa-brands fa-facebook',color:'#1877F2'},
+  email:{icon:'fa-solid fa-envelope',color:'#ff4d8d'},
+  whatsapp:{icon:'fa-brands fa-whatsapp',color:'#25D366'},
+  tiktok:{icon:'fa-brands fa-tiktok',color:'#000'},
+};
+let socials=[
+  {platform:'linkedin',url:'https://www.linkedin.com/in/puspa-ratih-6a5a683b0/'},
+  {platform:'email',url:'mailto:edupuspa@gmail.com'},
+];
+function renderSocialLinks(){
+  const c=document.getElementById('socialLinks');c.innerHTML='';
+  socials.forEach(s=>{
+    if(!s.url.trim())return;
+    const m=ICON_MAP[s.platform]||{icon:'fa-solid fa-link',color:'#888'};
+    const a=document.createElement('a');
+    a.href=s.url;a.target='_blank';a.className='social-link';
+    a.innerHTML=`<i class="${m.icon}" style="color:${m.color}"></i>${s.platform.charAt(0).toUpperCase()+s.platform.slice(1)}`;
+    c.appendChild(a);
+  });
+}
+function renderEditor(){
+  const ed=document.getElementById('socialEditor');ed.innerHTML='';
+  socials.forEach((s,i)=>{
+    const row=document.createElement('div');row.className='social-input-row';
+    row.innerHTML=`<select class="icon-select" data-idx="${i}">${Object.keys(ICON_MAP).map(k=>`<option value="${k}" ${k===s.platform?'selected':''}>${k.charAt(0).toUpperCase()+k.slice(1)}</option>`).join('')}</select><input type="text" value="${s.url}" placeholder="URL or email..." data-idx="${i}"/><button class="rm-social" data-idx="${i}">✕</button>`;
+    ed.appendChild(row);
+  });
+  ed.querySelectorAll('select').forEach(el=>el.addEventListener('change',e=>{socials[+e.target.dataset.idx].platform=e.target.value;renderSocialLinks();renderEditor();}));
+  ed.querySelectorAll('input').forEach(el=>el.addEventListener('input',e=>{socials[+e.target.dataset.idx].url=e.target.value;renderSocialLinks();}));
+  ed.querySelectorAll('.rm-social').forEach(el=>el.addEventListener('click',e=>{socials.splice(+e.target.dataset.idx,1);renderSocialLinks();renderEditor();}));
+}
+document.getElementById('addSocialBtn').addEventListener('click',()=>{socials.push({platform:'instagram',url:''});renderSocialLinks();renderEditor();});
+renderSocialLinks();renderEditor();
+
+/* ══ PHOTO ══ */
+document.getElementById('photoInput').addEventListener('change',function(){
+  const file=this.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=document.getElementById('profileImg');
+    img.src=e.target.result;
+    img.onload=()=>img.classList.add('loaded');
+    document.getElementById('photoPlaceholder').style.display='none';
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ══ CURSOR ══ */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function lerp(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lerp)})();
+
+/* ══ NAV SCROLL ══ */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+
+/* ══ REVEAL ══ */
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}});},{threshold:.12});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
